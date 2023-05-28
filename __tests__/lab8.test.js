@@ -88,10 +88,10 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 4
     // Reload the page, then select all of the <product-item> elements, 
     await page.reload();
-    const prodItems = await page.$$('product-item');
+    const productItems = await page.$$('product-item');
     // and check every element to make sure that all of their buttons say "Remove from Cart".
-    for(let i = 0; i < prodItems.length; i++){
-      const shadowRootProperty = await prodItems[i].getProperty('shadowRoot');
+    for(let i = 0; i < productItems.length; i++){
+      const shadowRootProperty = await productItems[i].getProperty('shadowRoot');
       const button = await shadowRootProperty.$('button');
       const buttonTextProperty = await button.getProperty('innerText');
       const buttonTextValue = await buttonTextProperty.jsonValue();
