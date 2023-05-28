@@ -51,8 +51,8 @@ describe('Basic user flow for Website', () => {
     // Query a <product-item> element using puppeteer ( checkout page.$() and page.$$() in the docs )
     const productItem = await page.$('product-item');
     // Grab the shadowRoot of that element (it's a property), then query a button from that shadowRoot.
-    const shadowRoot = await productItem.shadowRoot();
-    const button = await shadowRoot.$('button');
+    const shadowRootProperty = await productItem.getProperty("shadowRoot");
+    const button = await shadowRootProperty.$('button');
     // Once you have the button, you can click it and check the innerText property of the button.
     await button.click();
     const buttonTextProperty = await button.getProperty('innerText');
@@ -71,8 +71,8 @@ describe('Basic user flow for Website', () => {
     const productItems = await page.$$('product-item');
     // get the shadowRoot and query select the button inside, and click on it.
     for (let i = 1; i < productItems.length; i++) {
-      const shadowRoot = await productItems[i].shadowRoot();
-      const button = await shadowRoot.$('button');
+      const shadowRootProperty = await productItems[i].getProperty("shadowRoot");
+      const button = await shadowRootProperty.$('button');
       await button.click();
     }
     // Check to see if the innerText of #cart-count is 20
@@ -95,7 +95,7 @@ describe('Basic user flow for Website', () => {
       const button = await shadowRootProperty.$('button');
       const buttonTextProperty = await button.getProperty('innerText');
       const buttonTextValue = await buttonTextProperty.jsonValue();
-      expect(buttonTextValue ).toBe("Remove from Cart");
+      expect(buttonTextValue).toBe('Remove from Cart');
     }
     // Check to see if the innerText of #cart-count is 20
     const cartCount = await page.$("#cart-count");
@@ -112,7 +112,7 @@ describe('Basic user flow for Website', () => {
     const cartItems = await page.evaluate(() => {
       return localStorage.getItem('cart');
     });
-    expect(cartItems).toEqual('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
+    expect(cartItems).toBe('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
   });
 
   // Checking to make sure that if you remove all of the items from the cart that the cart
@@ -122,8 +122,8 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 6
     // Go through and click "Remove from Cart" on every single <product-item>, just like above.
     const productItems = await page.$$('product-item');
-    for(let i = 0; i < prodItems.length; i++) {
-      const shadowRootProperty = await prodItems[i].getProperty('shadowRoot');
+    for(let i = 0; i < productItems.length; i++) {
+      const shadowRootProperty = await productItems[i].getProperty('shadowRoot');
       const button = await shadowRootProperty.$('button');
       await button.click();
     }
