@@ -18,4 +18,3 @@ test('if (291)111-xyzk is a valid phone number', () => {
     expect(unitTest.isPhoneNumber("(291)111-xyzk")).toBe(false);
 });
 */
-  
